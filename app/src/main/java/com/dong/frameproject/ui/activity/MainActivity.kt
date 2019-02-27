@@ -2,14 +2,15 @@ package com.dong.frameproject.ui.activity
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import com.dong.frameproject.R
 import com.dong.frameproject.entity.Tab
 import com.dong.frameproject.ui.fragment.HomeFragment
-import android.support.v4.app.FragmentTabHost
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.LinearLayout
 import com.dong.frameproject.ui.fragment.SimpleFragment
+import com.dong.frameproject.widget.FragmentTabHost
 import kotlinx.android.synthetic.main.view_tab.view.*
 
 

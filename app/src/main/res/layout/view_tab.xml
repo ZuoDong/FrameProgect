@@ -7,7 +7,7 @@
 
 
     <ImageView
-            android:id="@+id/tab_img"
+        android:id="@+id/tab_img"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
@@ -15,7 +15,7 @@
         android:src="@drawable/selector_tab0" />
 
     <TextView
-            android:id="@+id/tab_tv"
+        android:id="@+id/tab_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="4dp"
