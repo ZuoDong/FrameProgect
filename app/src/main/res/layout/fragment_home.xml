@@ -1,17 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             tools:context=".ui.fragment.HomeFragment">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              tools:context=".ui.fragment.HomeFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-            android:id="@+id/text"
-            android:layout_centerInParent="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="20dp"
-            android:text="@string/hello_blank_fragment"/>
+    <android.support.v7.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="49dp"
+            android:background="@color/colorPrimary">
 
-</RelativeLayout>
+        <TextView android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="搜索发布"/>
+    </android.support.v7.widget.Toolbar>
+
+    <!--tl_indicator_color：指示器的颜色-->
+    <!--tl_indicator_height：指示器的高度-->
+    <!--tl_indicator_width：指示器的宽度-->
+    <!--tl_textUnselectColor：Tab未选中时字体的颜色-->
+    <!--tl_textSelectColor：Tab选中时字体的颜色-->
+    <!--tl_textsize：字体大小-->
+    <!--tl_indicator_width_equal_title：设置指示器宽度与文本宽度一致-->
+    <!--tl_tab_space_equal：设置Tab大小等分-->
+    <!--tl_divider_color：分割线的颜色-->
+    <!--tl_divider_width：分割线的宽度-->
+    <com.flyco.tablayout.SlidingTabLayout
+            android:id="@+id/tab_layout"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:tl_indicator_color="@color/colorPrimaryDark"
+            app:tl_indicator_height="3dp"
+            app:tl_textUnselectColor="@android:color/black"
+            app:tl_textSelectColor="@color/colorPrimaryDark"
+            app:tl_textsize="18sp"
+            app:tl_indicator_width_equal_title="true"
+            app:tl_tab_space_equal="false">
+    </com.flyco.tablayout.SlidingTabLayout>
+
+    <android.support.v4.view.ViewPager
+            android:id="@+id/view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+    </android.support.v4.view.ViewPager>
+</LinearLayout>

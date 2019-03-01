@@ -1,1 +1,5 @@
-使用FragmentTabHost和FrameLayout搭建框架
+使用FragmentTabHost和FrameLayout搭建主体框架
+使用SlidingTabLayout和ViewPager搭建模块 https://github.com/H07000223/FlycoTabLayout
+使用OKGO进行网络请求
+使用Gson进行json解析
+使用RxPermissions进行权限动态请求

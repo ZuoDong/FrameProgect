@@ -39,7 +39,7 @@ class SimpleFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        text.text = param1
+        text.text = param1?:"没有数据"
     }
 
 }

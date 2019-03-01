@@ -1,8 +1,8 @@
 package com.dong.frameproject.ui.activity
 
+import android.Manifest
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import com.dong.frameproject.R
 import com.dong.frameproject.entity.Tab
 import com.dong.frameproject.ui.fragment.HomeFragment
@@ -12,6 +12,8 @@ import android.widget.LinearLayout
 import com.dong.frameproject.ui.fragment.SimpleFragment
 import com.dong.frameproject.widget.FragmentTabHost
 import kotlinx.android.synthetic.main.view_tab.view.*
+import android.annotation.SuppressLint
+import com.tbruyelle.rxpermissions2.RxPermissions
 
 
 class MainActivity : AppCompatActivity() {
@@ -22,7 +24,20 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        initTabs()
+        initPermission()
+    }
+
+    @SuppressLint("CheckResult")
+    private fun initPermission() {
+        val rxPermissions = RxPermissions(this)
+        rxPermissions
+            .request(Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.READ_EXTERNAL_STORAGE)
+            .subscribe { granted ->
+                if(granted){
+                    initTabs()
+                }
+            }
     }
 
     private fun initTabs() {

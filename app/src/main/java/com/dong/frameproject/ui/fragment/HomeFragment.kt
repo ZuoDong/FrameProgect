@@ -23,6 +23,7 @@ class HomeFragment : Fragment() {
     }
 
     private var param1: String? = null
+    private var fragments = ArrayList<Fragment>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,6 +42,9 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        text.text = param1
+        fragments.add(NewsFragment())
+        fragments.add(SimpleFragment())
+        fragments.add(SimpleFragment())
+        tab_layout.setViewPager(view_pager, arrayOf("新闻", "美图", "视频"), activity, fragments)
     }
 }
