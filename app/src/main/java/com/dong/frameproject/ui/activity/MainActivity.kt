@@ -16,7 +16,7 @@ import android.annotation.SuppressLint
 import com.tbruyelle.rxpermissions2.RxPermissions
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
 
     private val mTabs = ArrayList<Tab>()
 

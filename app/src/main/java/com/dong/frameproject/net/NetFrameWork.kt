@@ -1,17 +1,16 @@
 package com.dong.frameproject.net
 
 import android.app.Application
+import com.dong.frameproject.net.interceptor.HttpLoggingInterceptor
 import com.lzy.okgo.OkGo
 import com.lzy.okgo.cache.CacheEntity
 import com.lzy.okgo.cache.CacheMode
 import com.lzy.okgo.cookie.CookieJarImpl
 import com.lzy.okgo.cookie.store.SPCookieStore
 import com.lzy.okgo.https.HttpsUtils
-import com.lzy.okgo.interceptor.HttpLoggingInterceptor
 import com.lzy.okgo.model.HttpHeaders
 import com.lzy.okgo.model.HttpParams
 import okhttp3.OkHttpClient
-import java.util.logging.Level
 
 /**
  * 作者：zuo
@@ -22,11 +21,9 @@ object NetFrameWork {
     fun init(app:Application){
         val builder = OkHttpClient.Builder()
 
-        val loggingInterceptor = HttpLoggingInterceptor("OkGo")
+        val loggingInterceptor = HttpLoggingInterceptor()
         //log打印级别，决定了log显示的详细程度
         loggingInterceptor.setPrintLevel(HttpLoggingInterceptor.Level.BODY)
-        //log颜色级别，决定了log在控制台显示的颜色
-        loggingInterceptor.setColorLevel(Level.INFO)
         builder.addInterceptor(loggingInterceptor)
 
 
@@ -52,11 +49,11 @@ object NetFrameWork {
 
 
         val headers = HttpHeaders()
-        headers.put("commonHeaderKey1", "commonHeaderValue1")    //header不支持中文，不允许有特殊字符
-        headers.put("commonHeaderKey2", "commonHeaderValue2")
+//        headers.put("commonHeaderKey1", "commonHeaderValue1")    //header不支持中文，不允许有特殊字符
+//        headers.put("commonHeaderKey2", "commonHeaderValue2")
         val params = HttpParams()
-        params.put("commonParamsKey1", "commonParamsValue1")     //param支持中文,直接传,不要自己编码
-        params.put("commonParamsKey2", "这里支持中文参数")
+//        params.put("commonParamsKey1", "commonParamsValue1")     //param支持中文,直接传,不要自己编码
+//        params.put("commonParamsKey2", "这里支持中文参数")
 
         OkGo.getInstance().init(app)                       //必须调用初始化
             .setOkHttpClient(builder.build())               //建议设置OkHttpClient，不设置将使用默认的
