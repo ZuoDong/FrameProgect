@@ -3,3 +3,5 @@
 使用OKGO进行网络请求 <br>
 使用Gson进行json解析 <br>
 使用RxPermissions进行权限动态请求 <br>
+集成Logger,并进行封装
+使用multiDex解决65535的问题

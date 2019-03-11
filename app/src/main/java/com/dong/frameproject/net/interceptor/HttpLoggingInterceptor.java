@@ -44,7 +44,7 @@ public class HttpLoggingInterceptor implements Interceptor {
         try {
             response = chain.proceed(request);
         } catch (Exception e) {
-            Log.e("<-- HTTP FAILED: " + e);
+            Log.e(e);
             throw e;
         }
         long tookMs = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startNs);
@@ -54,7 +54,7 @@ public class HttpLoggingInterceptor implements Interceptor {
     }
 
     private void logForRequest(Request request, Connection connection) throws IOException {
-        StringBuffer stringBuffer = new StringBuffer();
+        StringBuilder stringBuilder = new StringBuilder();
         boolean logBody = (printLevel == Level.BODY);
         boolean logHeaders = (printLevel == Level.BODY || printLevel == Level.HEADERS);
         RequestBody requestBody = request.body();
@@ -63,19 +63,17 @@ public class HttpLoggingInterceptor implements Interceptor {
 
         try {
             String requestStartMessage = "Request " + request.method() + ' ' + request.url() + ' ' + protocol;
-            stringBuffer.append(requestStartMessage);
+            stringBuilder.append(requestStartMessage);
 
             if (logHeaders) {
                 if (hasRequestBody) {
                     // Request body headers are only present when installed as a network interceptor. Force
                     // them to be included (when available) so there values are known.
                     if (requestBody.contentType() != null) {
-//                        Log.d("\tContent-Type: " + requestBody.contentType());
-                        stringBuffer.append("\nContent-Type: " + requestBody.contentType());
+                        stringBuilder.append("\nContent-Type: " + requestBody.contentType());
                     }
                     if (requestBody.contentLength() != -1) {
-//                        Log.d("\tContent-Length: " + requestBody.contentLength());
-                        stringBuffer.append("\nContent-Length: " + requestBody.contentLength());
+                        stringBuilder.append("\nContent-Length: " + requestBody.contentLength());
                     }
                 }
                 Headers headers = request.headers();
@@ -83,8 +81,7 @@ public class HttpLoggingInterceptor implements Interceptor {
                     String name = headers.name(i);
                     // Skip headers from the request body as they are explicitly logged above.
                     if (!"Content-Type".equalsIgnoreCase(name) && !"Content-Length".equalsIgnoreCase(name)) {
-//                        Log.d("\t" + name + ": " + headers.value(i));
-                        stringBuffer.append("\n" + name + ": " + headers.value(i));
+                        stringBuilder.append("\n" + name + ": " + headers.value(i));
                     }
                 }
 
@@ -98,7 +95,7 @@ public class HttpLoggingInterceptor implements Interceptor {
                         body.writeTo(buffer);
                         Charset charset = getCharset(body.contentType());
 //                        Log.d("\tbody:" + buffer.readString(charset));
-                        stringBuffer.append("\nbody:" + buffer.readString(charset));
+                        stringBuilder.append("\nbody:" + buffer.readString(charset));
                     } else {
                         Log.d("\nbody: maybe [binary body], omitted!");
                     }
@@ -107,11 +104,12 @@ public class HttpLoggingInterceptor implements Interceptor {
         } catch (Exception e) {
             Log.e(e);
         } finally {
-            Log.any(stringBuffer.toString());
+            Log.any(stringBuilder.toString());
         }
     }
 
     private Response logForResponse(Response response, long tookMs) {
+        StringBuilder stringBuilder = new StringBuilder();
         Response.Builder builder = response.newBuilder();
         Response clone = builder.build();
         ResponseBody responseBody = clone.body();
@@ -119,13 +117,13 @@ public class HttpLoggingInterceptor implements Interceptor {
         boolean logHeaders = (printLevel == Level.BODY || printLevel == Level.HEADERS);
 
         try {
-            Log.d("<-- " + clone.code() + ' ' + clone.message() + ' ' + clone.request().url() + " (" + tookMs + "ms）");
+            stringBuilder.append("Response " + clone.code() + ' ' + clone.message() + ' ' + clone.request().url() + " (" + tookMs + "ms）");
             if (logHeaders) {
                 Headers headers = clone.headers();
                 for (int i = 0, count = headers.size(); i < count; i++) {
-                    Log.d("\t" + headers.name(i) + ": " + headers.value(i));
+                    stringBuilder.append("\n" + headers.name(i) + ": " + headers.value(i));
                 }
-                Log.d(" ");
+                Log.any(stringBuilder.toString());
                 if (logBody && HttpHeaders.hasBody(clone)) {
                     if (responseBody == null) return response;
 
