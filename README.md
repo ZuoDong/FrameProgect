@@ -5,3 +5,5 @@
 使用RxPermissions进行权限动态请求 <br>
 集成Logger,并进行封装
 使用multiDex解决65535的问题
+使用Glide加载图片
+抽取基类，并添加公共UI布局

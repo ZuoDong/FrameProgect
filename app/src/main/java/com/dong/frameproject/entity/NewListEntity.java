@@ -1,13 +1,13 @@
 package com.dong.frameproject.entity;
 
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  * 作者：zuo
  * 时间：2019/2/28 15:53
  */
 public class NewListEntity {
-    public List<NewsBean> list;
+    public ArrayList<NewsBean> list;
     public int page;
     public int psize;
     public int count;

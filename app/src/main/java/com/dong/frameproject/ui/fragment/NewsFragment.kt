@@ -4,7 +4,7 @@ package com.dong.frameproject.ui.fragment
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.util.Log
+import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,36 +13,65 @@ import com.dong.frameproject.R
 import com.dong.frameproject.entity.BaseResponse
 import com.dong.frameproject.entity.NewListEntity
 import com.dong.frameproject.net.callback.JsonCallback
+import com.dong.frameproject.ui.adapter.NewsFragmentAdapter
 import com.dong.frameproject.utils.FrameUrl
 import com.lzy.okgo.OkGo
 import com.lzy.okgo.model.Response
 import kotlinx.android.synthetic.main.fragment_news.*
 
-class NewsFragment : Fragment() {
+class NewsFragment : BaseFragment() {
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_news, container, false)
+    private var page = 1
+    private var isRefresh = false
+    private lateinit var adapter: NewsFragmentAdapter
+
+    override fun onCreateView(parentView: ViewGroup, savedInstanceState: Bundle?): View? {
+        return LayoutInflater.from(context).inflate(R.layout.fragment_news, parentView, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        recyclerView.layoutManager = LinearLayoutManager(context)
+        adapter = NewsFragmentAdapter()
+        recyclerView.adapter = adapter
 
+        refreshLayout.setOnRefreshListener {
+            isRefresh = true
+            page = 1
+            requestData()
+        }
+
+        refreshLayout.setOnLoadMoreListener {
+            isRefresh = false
+            page++
+            requestData()
+        }
+
+        requestData()
+    }
+
+    private fun requestData(){
         OkGo.post<BaseResponse<NewListEntity>>(FrameUrl.NEWS_LIST)
             .tag(this)
             .params("cid","9")
+            .params("page",page)
             .execute(object :JsonCallback<BaseResponse<NewListEntity>>(){
                 @SuppressLint("SetTextI18n")
                 override fun onSuccess(response: Response<BaseResponse<NewListEntity>>?) {
-                    result.text = "请求成功\n${response?.body()?.toString()}"
+                    if(isRefresh){
+                        adapter.setData(response?.body()?.data?.list)
+                        refreshLayout.finishRefresh()
+                    }else{
+                        adapter.addData(response?.body()?.data?.list)
+                        refreshLayout.finishLoadMore()
+                    }
                 }
 
                 override fun onError(response: Response<BaseResponse<NewListEntity>>?) {
                     super.onError(response)
-                    result.text = "请求失败"
+                    if(page > 1) page--
+                    refreshLayout.finishRefresh()
+                    refreshLayout.finishLoadMore()
                 }
             })
     }

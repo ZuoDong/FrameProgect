@@ -4,7 +4,7 @@ package com.dong.frameproject.entity;
  * 作者：zuo
  * 时间：2019/2/28 15:58
  */
-class NewsBean {
+public class NewsBean {
     /**
      *     "aid": "MTEzMDA1NTI",
      *     "title": "抖音国际版违规搜集儿童隐私 在美被罚570万美元",
