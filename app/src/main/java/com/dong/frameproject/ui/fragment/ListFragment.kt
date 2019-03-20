@@ -1,13 +1,11 @@
 package com.dong.frameproject.ui.fragment
 
-
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
 import com.dong.frameproject.R
 import com.dong.frameproject.entity.BaseResponse
 import com.dong.frameproject.entity.NewListEntity
@@ -18,8 +16,11 @@ import com.lzy.okgo.OkGo
 import com.lzy.okgo.model.Response
 import kotlinx.android.synthetic.main.fragment_news.*
 
-class NewsFragment : BaseFragment() {
-
+/**
+ * 作者：zuo
+ * 时间：2019/3/18 11:22
+ */
+abstract class ListFragment<T>:BaseFragment(){
     private var page = 1
     private var isRefresh = false
     private lateinit var adapter: NewsFragmentAdapter
@@ -55,7 +56,7 @@ class NewsFragment : BaseFragment() {
             .tag(this)
             .params("cid","9")
             .params("page",page)
-            .execute(object :JsonCallback<BaseResponse<NewListEntity>>(){
+            .execute(object : JsonCallback<BaseResponse<NewListEntity>>(){
                 @SuppressLint("SetTextI18n")
                 override fun onSuccess(response: Response<BaseResponse<NewListEntity>>?) {
                     showContent()
