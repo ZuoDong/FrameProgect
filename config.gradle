@@ -9,9 +9,10 @@ ext {
     support_version = '27.1.1'
 
     supportDependencies = [
-            appcompat_v7                     : "com.android.support:appcompat-v7:$support_version",
-            design                           : "com.android.support:design:$support_version",
-            support_v4                       : "com.android.support:support-v4:$support_version",
-            percent                          : "com.android.support:percent:$support_version"
+            "appcompat-v7"                     : "com.android.support:appcompat-v7:$support_version",
+            "design"                           : "com.android.support:design:$support_version",
+            "support-v4"                       : "com.android.support:support-v4:$support_version",
+            "percent"                          : "com.android.support:percent:$support_version",
+            "recyclerview-v7"                  : "com.android.support:recyclerview-v7:$support_version"
     ]
 }

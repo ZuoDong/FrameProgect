@@ -1,4 +1,4 @@
-package com.dong.framelibrary.baseadapter.wrapper;
+package com.zhy.adapter.recyclerview.wrapper;
 
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;

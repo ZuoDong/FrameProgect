@@ -28,6 +28,7 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-    implementation rootProject.ext.supportDependencies.appcompat_v7
-    implementation rootProject.ext.supportDependencies.support_v4
+    implementation rootProject.ext.supportDependencies["appcompat-v7"]
+    implementation rootProject.ext.supportDependencies["support-v4"]
+    implementation rootProject.ext.supportDependencies["recyclerview-v7"]
 }

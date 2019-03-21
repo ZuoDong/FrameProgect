@@ -39,8 +39,8 @@ class HomeFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         fragments.add(NewsFragment())
+        fragments.add(TechnologyFragment())
         fragments.add(SimpleFragment())
-        fragments.add(SimpleFragment())
-        tab_layout.setViewPager(view_pager, arrayOf("新闻", "美图", "视频"), activity, fragments)
+        tab_layout.setViewPager(view_pager, arrayOf("头条", "科技", "视频"), activity, fragments)
     }
 }

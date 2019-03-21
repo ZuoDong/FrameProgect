@@ -1,39 +1,33 @@
 package com.dong.frameproject.ui.fragment
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.dong.frameproject.R
-import com.dong.frameproject.entity.BaseResponse
-import com.dong.frameproject.entity.NewListEntity
-import com.dong.frameproject.net.callback.JsonCallback
-import com.dong.frameproject.ui.adapter.NewsFragmentAdapter
-import com.dong.frameproject.utils.FrameUrl
-import com.lzy.okgo.OkGo
-import com.lzy.okgo.model.Response
-import kotlinx.android.synthetic.main.fragment_news.*
+import com.zhy.adapter.recyclerview.base.ViewHolder
+import kotlinx.android.synthetic.main.fragment_base_list.*
 
 /**
  * 作者：zuo
  * 时间：2019/3/18 11:22
  */
 abstract class ListFragment<T>:BaseFragment(){
-    private var page = 1
-    private var isRefresh = false
-    private lateinit var adapter: NewsFragmentAdapter
+    protected var page = 1
+    protected var isRefresh = false
+    protected lateinit var adapter: RecyclerView.Adapter<ViewHolder>
+    protected var mData:MutableList<T> = ArrayList()
 
     override fun onCreateView(parentView: ViewGroup, savedInstanceState: Bundle?): View? {
-        return LayoutInflater.from(context).inflate(R.layout.fragment_news, parentView, false)
+        return LayoutInflater.from(context).inflate(R.layout.fragment_base_list, parentView, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        recyclerView.layoutManager = LinearLayoutManager(context)
-        adapter = NewsFragmentAdapter()
-        recyclerView.adapter = adapter
+
+        initViewCreated()
 
         refreshLayout.setOnRefreshListener {
             isRefresh = true
@@ -51,40 +45,38 @@ abstract class ListFragment<T>:BaseFragment(){
         requestData()
     }
 
-    private fun requestData(){
-        OkGo.post<BaseResponse<NewListEntity>>(FrameUrl.NEWS_LIST)
-            .tag(this)
-            .params("cid","9")
-            .params("page",page)
-            .execute(object : JsonCallback<BaseResponse<NewListEntity>>(){
-                @SuppressLint("SetTextI18n")
-                override fun onSuccess(response: Response<BaseResponse<NewListEntity>>?) {
-                    showContent()
-                    if(isRefresh){
-                        adapter.setData(response?.body()?.data?.list)
-                        refreshLayout.finishRefresh()
-                    }else{
-                        adapter.addData(response?.body()?.data?.list)
-                        refreshLayout.finishLoadMore()
-                    }
+    //请求数据
+    abstract fun requestData()
 
-                    //只有第一页 且 没有数据时显示空布局
-                    if(page == 1 && adapter.itemCount == 0){
-                        showEmpty()
-                    }
-                }
+    //初始化refreshLayout 和 recyclerView
+    abstract fun initViewCreated()
 
-                override fun onError(response: Response<BaseResponse<NewListEntity>>?) {
-                    super.onError(response)
-                    if(page > 1) page--
-                    refreshLayout.finishRefresh()
-                    refreshLayout.finishLoadMore()
+    fun onListSuccess(list: ArrayList<T>?){
+        showContent()
+        if(isRefresh){
+            mData = list?: mutableListOf()
+            adapter.notifyDataSetChanged()
+            refreshLayout.finishRefresh()
+        }else{
+            mData.addAll(list?: mutableListOf())
+            adapter.notifyDataSetChanged()
+            refreshLayout.finishLoadMore()
+        }
 
-                    //只有第一页 且 没有数据时显示错误
-                    if(page == 1 && adapter.itemCount == 0){
-                        showError()
-                    }
-                }
-            })
+        //只有第一页 且 没有数据时显示空布局
+        if(page == 1 && adapter.itemCount == 0){
+            showEmpty()
+        }
+    }
+
+    fun onListError(){
+        if(page > 1) page--
+        refreshLayout.finishRefresh()
+        refreshLayout.finishLoadMore()
+
+        //只有第一页 且 没有数据时显示错误
+        if(page == 1 && adapter.itemCount == 0){
+            showError()
+        }
     }
 }
