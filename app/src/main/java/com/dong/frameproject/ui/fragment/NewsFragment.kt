@@ -3,7 +3,6 @@ package com.dong.frameproject.ui.fragment
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
@@ -47,6 +46,7 @@ class NewsFragment : BaseFragment() {
             requestData()
         }
 
+        showLoading()
         requestData()
     }
 
@@ -58,12 +58,18 @@ class NewsFragment : BaseFragment() {
             .execute(object :JsonCallback<BaseResponse<NewListEntity>>(){
                 @SuppressLint("SetTextI18n")
                 override fun onSuccess(response: Response<BaseResponse<NewListEntity>>?) {
+                    showContent()
                     if(isRefresh){
                         adapter.setData(response?.body()?.data?.list)
                         refreshLayout.finishRefresh()
                     }else{
                         adapter.addData(response?.body()?.data?.list)
                         refreshLayout.finishLoadMore()
+                    }
+
+                    //只有第一页 且 没有数据时显示空布局
+                    if(page == 1 && adapter.itemCount == 0){
+                        showEmpty()
                     }
                 }
 
@@ -72,6 +78,11 @@ class NewsFragment : BaseFragment() {
                     if(page > 1) page--
                     refreshLayout.finishRefresh()
                     refreshLayout.finishLoadMore()
+
+                    //只有第一页 且 没有数据时显示错误
+                    if(page == 1 && adapter.itemCount == 0){
+                        showError()
+                    }
                 }
             })
     }

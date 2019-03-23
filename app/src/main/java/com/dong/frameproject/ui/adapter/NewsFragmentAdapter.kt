@@ -37,7 +37,7 @@ class NewsFragmentAdapter:RecyclerView.Adapter<NewsFragmentAdapter.ViewHolder>()
         holder.iv_image.loadUrl(dataList[position].headpic)
         holder.itemView.setOnClickListener{
 //            Toast.makeText(mContext,"点击了第 $position 条",Toast.LENGTH_SHORT).show()
-            WebViewActivity.start(mContext,dataList[position].source_url,"文章详情")
+            WebViewActivity.start(mContext,dataList[position].source_url,"头条")
         }
     }
 

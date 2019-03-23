@@ -48,7 +48,7 @@ class FrameApplication : MultiDexApplication() {
                 return ClassicsHeader(context)
             }
         })
-        SmartRefreshLayout.setDefaultRefreshFooterCreator { context, layout ->
+        SmartRefreshLayout.setDefaultRefreshFooterCreator { context, _ ->
             ClassicsFooter(context).setDrawableSize(20f)
         }
     }

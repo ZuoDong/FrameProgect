@@ -41,9 +41,9 @@ class MainActivity : BaseActivity() {
     }
 
     private fun initTabs() {
-        mTabs.add(Tab(HomeFragment::class.java,"测一测",R.drawable.selector_tab0,Bundle().apply { putCharSequence(HomeFragment.ARG_PARAM1,"测一测") }))
-        mTabs.add(Tab(SimpleFragment::class.java,"变美助手",R.drawable.selector_tab1,Bundle().apply { putCharSequence(SimpleFragment.ARG_PARAM1,"变美助手") }))
-        mTabs.add(Tab(SimpleFragment::class.java,"圈子",R.drawable.selector_tab2,Bundle().apply { putCharSequence(SimpleFragment.ARG_PARAM1,"圈子") }))
+        mTabs.add(Tab(HomeFragment::class.java,"新闻",R.drawable.selector_tab0,Bundle().apply { putCharSequence(HomeFragment.ARG_PARAM1,"新闻") }))
+        mTabs.add(Tab(SimpleFragment::class.java,"购物",R.drawable.selector_tab1,Bundle().apply { putCharSequence(SimpleFragment.ARG_PARAM1,"购物") }))
+        mTabs.add(Tab(SimpleFragment::class.java,"聊天",R.drawable.selector_tab2,Bundle().apply { putCharSequence(SimpleFragment.ARG_PARAM1,"聊天") }))
         mTabs.add(Tab(SimpleFragment::class.java,"我的",R.drawable.selector_tab3,Bundle().apply { putCharSequence(SimpleFragment.ARG_PARAM1,"我的") }))
 
         val mTabhost = this.findViewById<View>(android.R.id.tabhost) as FragmentTabHost

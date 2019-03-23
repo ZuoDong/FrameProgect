@@ -52,6 +52,7 @@ class WebViewActivity : BaseActivity() {
         webView.loadUrl(url)
     }
 
+    @Suppress("DEPRECATION")
     @SuppressLint("SetJavaScriptEnabled")
     private fun initWebView() {
         webView.requestFocus()
