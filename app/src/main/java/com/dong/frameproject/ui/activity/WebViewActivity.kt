@@ -11,9 +11,10 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
 import android.webkit.*
+import com.dong.framelibrary.base.BaseActivity
 import com.dong.frameproject.BuildConfig
 import com.dong.frameproject.R
-import com.dong.frameproject.utils.toast
+import com.dong.framelibrary.utils.toast
 import kotlinx.android.synthetic.main.activity_web_view.*
 
 class WebViewActivity : BaseActivity() {

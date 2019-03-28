@@ -7,82 +7,55 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import com.dong.framelibrary.base.BaseFragment
+import com.dong.framelibrary.entity.BaseResponse
+import com.dong.framelibrary.net.callback.JsonCallback
+import com.dong.framelibrary.utils.Log
+import com.dong.framelibrary.utils.loadUrl
 
 import com.dong.frameproject.R
-import com.dong.frameproject.entity.BaseResponse
 import com.dong.frameproject.entity.NewListEntity
-import com.dong.frameproject.net.callback.JsonCallback
+import com.dong.frameproject.entity.NewsBean
+import com.dong.frameproject.ui.activity.WebViewActivity
 import com.dong.frameproject.ui.adapter.NewsFragmentAdapter
 import com.dong.frameproject.utils.FrameUrl
 import com.lzy.okgo.OkGo
 import com.lzy.okgo.model.Response
+import com.zhy.adapter.recyclerview.CommonAdapter
+import com.zhy.adapter.recyclerview.base.ViewHolder
 import kotlinx.android.synthetic.main.fragment_news.*
 
-class NewsFragment : BaseFragment() {
+class NewsFragment : ListFragment<NewsBean>() {
 
-    private var page = 1
-    private var isRefresh = false
-    private lateinit var adapter: NewsFragmentAdapter
-
-    override fun onCreateView(parentView: ViewGroup, savedInstanceState: Bundle?): View? {
-        return LayoutInflater.from(context).inflate(R.layout.fragment_news, parentView, false)
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun initViewCreated() {
         recyclerView.layoutManager = LinearLayoutManager(context)
-        adapter = NewsFragmentAdapter()
+        adapter = object : CommonAdapter<NewsBean>(context, R.layout.item_news_fragment,mData){
+            override fun convert(holder: ViewHolder?, t: NewsBean?, position: Int) {
+                holder?.setText(R.id.title,t?.title)
+                holder?.setText(R.id.source,t?.source)
+                holder?.getView<ImageView>(R.id.image)?.loadUrl(t?.headpic)
+                holder?.itemView?.setOnClickListener {
+                    if(t != null) WebViewActivity.start(mContext,t.source_url,"推荐")
+                }
+            }
+        }
         recyclerView.adapter = adapter
-
-        refreshLayout.setOnRefreshListener {
-            isRefresh = true
-            page = 1
-            requestData()
-        }
-
-        refreshLayout.setOnLoadMoreListener {
-            isRefresh = false
-            page++
-            requestData()
-        }
-
-        showLoading()
-        requestData()
     }
 
-    private fun requestData(){
+    override fun requestData(){
         OkGo.post<BaseResponse<NewListEntity>>(FrameUrl.NEWS_LIST)
             .tag(this)
             .params("cid","9")
             .params("page",page)
-            .execute(object :JsonCallback<BaseResponse<NewListEntity>>(){
+            .execute(object : JsonCallback<BaseResponse<NewListEntity>>(){
                 @SuppressLint("SetTextI18n")
                 override fun onSuccess(response: Response<BaseResponse<NewListEntity>>?) {
-                    showContent()
-                    if(isRefresh){
-                        adapter.setData(response?.body()?.data?.list)
-                        refreshLayout.finishRefresh()
-                    }else{
-                        adapter.addData(response?.body()?.data?.list)
-                        refreshLayout.finishLoadMore()
-                    }
-
-                    //只有第一页 且 没有数据时显示空布局
-                    if(page == 1 && adapter.itemCount == 0){
-                        showEmpty()
-                    }
+                    onListSuccess(response?.body()?.data?.list)
                 }
 
                 override fun onError(response: Response<BaseResponse<NewListEntity>>?) {
-                    super.onError(response)
-                    if(page > 1) page--
-                    refreshLayout.finishRefresh()
-                    refreshLayout.finishLoadMore()
-
-                    //只有第一页 且 没有数据时显示错误
-                    if(page == 1 && adapter.itemCount == 0){
-                        showError()
-                    }
+                    onListError()
                 }
             })
     }

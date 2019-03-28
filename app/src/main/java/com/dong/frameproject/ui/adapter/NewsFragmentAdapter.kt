@@ -5,12 +5,10 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import android.widget.Toast
 import com.dong.frameproject.R
 import com.dong.frameproject.entity.NewsBean
 import com.dong.frameproject.ui.activity.WebViewActivity
-import com.dong.frameproject.utils.loadUrl
+import com.dong.framelibrary.utils.loadUrl
 import kotlinx.android.synthetic.main.item_news_fragment.view.*
 
 /**

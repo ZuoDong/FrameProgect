@@ -1,4 +1,7 @@
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion rootProject.ext.android.compileSdkVersion
@@ -16,7 +19,12 @@ android {
     buildTypes {
         release {
             minifyEnabled false
+            buildConfigField "boolean", "logEnabled", "false"
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+        debug {
+            buildConfigField "boolean", "logEnabled", "true"
         }
     }
 
@@ -28,7 +36,24 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation rootProject.ext.supportDependencies["appcompat-v7"]
     implementation rootProject.ext.supportDependencies["support-v4"]
     implementation rootProject.ext.supportDependencies["recyclerview-v7"]
+    api 'com.lzy.net:okgo:3.0.4'
+    api 'com.google.code.gson:gson:2.8.5'
+    api 'com.github.bumptech.glide:glide:4.9.0'
+    api 'com.github.tbruyelle:rxpermissions:0.10.2'
+    //65535的官方解决方法
+    api 'com.android.support:multidex:1.0.3'
+
+    implementation 'com.orhanobut:logger:2.2.0'
+    implementation 'tech.jianyue.auth:auth_qq:1.5.0'
+    implementation 'tech.jianyue.auth:auth_weibo:1.5.0'
+    implementation 'tech.jianyue.auth:auth_weixin:1.5.0'
+    implementation 'tech.jianyue.auth:auth_zhifubao:1.5.0'
+}
+repositories {
+    mavenCentral()
 }

@@ -1,7 +1,6 @@
 package com.dong.frameproject.ui.activity
 
 import android.Manifest
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import com.dong.frameproject.R
 import com.dong.frameproject.entity.Tab
@@ -13,6 +12,7 @@ import com.dong.frameproject.ui.fragment.SimpleFragment
 import com.dong.frameproject.widget.FragmentTabHost
 import kotlinx.android.synthetic.main.view_tab.view.*
 import android.annotation.SuppressLint
+import com.dong.framelibrary.base.BaseActivity
 import com.tbruyelle.rxpermissions2.RxPermissions
 
 

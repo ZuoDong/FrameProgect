@@ -7,9 +7,8 @@ import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
+import com.dong.framelibrary.base.BaseFragment
 import com.dong.frameproject.R
-import com.dong.frameproject.utils.Log
 import kotlinx.android.synthetic.main.fragment_simple.*
 
 

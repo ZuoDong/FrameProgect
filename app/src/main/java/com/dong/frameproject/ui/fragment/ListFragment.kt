@@ -1,11 +1,12 @@
 package com.dong.frameproject.ui.fragment
 
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.dong.framelibrary.base.BaseFragment
+import com.dong.framelibrary.utils.Log
 import com.dong.frameproject.R
 import com.zhy.adapter.recyclerview.base.ViewHolder
 import kotlinx.android.synthetic.main.fragment_base_list.*
@@ -14,7 +15,7 @@ import kotlinx.android.synthetic.main.fragment_base_list.*
  * 作者：zuo
  * 时间：2019/3/18 11:22
  */
-abstract class ListFragment<T>:BaseFragment(){
+abstract class ListFragment<T>: BaseFragment(){
     protected var page = 1
     protected var isRefresh = false
     protected lateinit var adapter: RecyclerView.Adapter<ViewHolder>
@@ -78,5 +79,10 @@ abstract class ListFragment<T>:BaseFragment(){
         if(page == 1 && adapter.itemCount == 0){
             showError()
         }
+    }
+
+    override fun retryRequest() {
+        showLoading()
+        requestData()
     }
 }
