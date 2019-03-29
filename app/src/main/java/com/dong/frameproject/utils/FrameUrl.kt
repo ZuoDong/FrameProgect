@@ -6,4 +6,5 @@ package com.dong.frameproject.utils
  */
 object FrameUrl {
     const val NEWS_LIST = "http://api.dagoogle.cn/news/nlist"
+    const val VIDEO_LIST = "https://www.apiopen.top/satinApi"
 }

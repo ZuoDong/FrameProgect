@@ -47,7 +47,7 @@ public abstract class CommonAdapter<T> extends MultiItemTypeAdapter<T>
         });
     }
 
-    protected abstract void convert(ViewHolder holder, T t, int position);
+    protected abstract void convert(ViewHolder holder, T bean, int position);
 
 
 }

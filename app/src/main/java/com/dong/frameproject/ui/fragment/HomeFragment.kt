@@ -41,7 +41,7 @@ class HomeFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         fragments.add(NewsFragment())
         fragments.add(TechnologyFragment())
-        fragments.add(SimpleFragment())
+        fragments.add(VideoFragment())
         tab_layout.setViewPager(view_pager, arrayOf("头条", "科技", "视频"), activity, fragments)
     }
 }

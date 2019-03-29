@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent" android:layout_height="wrap_content"
+              android:padding="10dp"
+              android:orientation="vertical">
+
+    <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <ImageView
+                android:id="@+id/video_user_icon"
+                android:layout_width="40dp"
+                android:layout_height="39dp"
+                android:background="#11000000"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:scaleType="centerCrop" tools:layout_editor_absoluteY="1dp"/>
+
+        <TextView
+                android:id="@+id/video_user_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#222"
+                android:layout_marginLeft="10dp"
+                app:layout_constraintLeft_toRightOf="@id/video_user_icon"
+                android:text="名字"/>
+
+        <TextView
+                android:id="@+id/video_pass_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="11dp"
+                android:textColor="#777"
+                app:layout_constraintTop_toBottomOf="@id/video_user_name"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="@id/video_user_name"
+                android:text="2019.10.23"/>
+    </android.support.constraint.ConstraintLayout>
+
+    <TextView
+            android:id="@+id/video_title"
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:textColor="#222"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:text="视频名称"/>
+
+    <cn.jzvd.JzvdStd
+            android:id="@+id/video_player"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="200dp" />
+</LinearLayout>
