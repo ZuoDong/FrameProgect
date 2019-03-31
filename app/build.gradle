@@ -42,6 +42,12 @@ android {
     }
     productFlavors {
     }
+
+
+    compileOptions {
+        sourceCompatibility 1.8
+        targetCompatibility 1.8
+    }
 }
 
 //统一设置所有support库版本，避免依赖树冲突

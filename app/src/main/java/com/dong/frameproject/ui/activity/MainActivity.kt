@@ -16,7 +16,7 @@ import com.dong.framelibrary.base.BaseActivity
 import com.tbruyelle.rxpermissions2.RxPermissions
 
 
-class MainActivity : BaseActivity() {
+class MainActivity : VideoBaseActivity() {
 
     private val mTabs = ArrayList<Tab>()
 

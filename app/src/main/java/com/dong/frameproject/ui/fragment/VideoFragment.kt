@@ -43,20 +43,18 @@ class VideoFragment:ListFragment<VideoEntity>() {
         refreshLayout.setEnableRefresh(false)
 
         recyclerView.addOnChildAttachStateChangeListener(object :RecyclerView.OnChildAttachStateChangeListener{
+            override fun onChildViewAttachedToWindow(view: View?) {}
+
             override fun onChildViewDetachedFromWindow(view: View?) {
-//                val jzvd = view!!.findViewById<JzvdStd>(R.id.video_player)
-//                if (jzvd != null && jzvd.jzDataSource.containsTheUrl(JZMediaManager.getCurrentUrl())) {
-//                    val currentJzvd = JzvdMgr.getCurrentJzvd()
-//                    if (currentJzvd != null && currentJzvd!!.currentScreen != Jzvd.SCREEN_WINDOW_FULLSCREEN) {
-//                        Jzvd.releaseAllVideos()
-//                    }
-//                }
+                val jzvd = view?.findViewById<Jzvd>(R.id.video_player)
+                if (jzvd != null && Jzvd.CURRENT_JZVD != null &&
+                    jzvd.jzDataSource.containsTheUrl(Jzvd.CURRENT_JZVD.jzDataSource.currentUrl)
+                ) {
+                    if (Jzvd.CURRENT_JZVD != null && Jzvd.CURRENT_JZVD.currentScreen != Jzvd.SCREEN_WINDOW_FULLSCREEN) {
+                        Jzvd.resetAllVideos()
+                    }
+                }
             }
-
-            override fun onChildViewAttachedToWindow(view: View?) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-            }
-
         })
     }
 
@@ -76,4 +74,6 @@ class VideoFragment:ListFragment<VideoEntity>() {
                 }
             })
     }
+
+
 }

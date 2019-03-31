@@ -49,9 +49,15 @@
             android:ellipsize="end"
             android:text="视频名称"/>
 
-    <cn.jzvd.JzvdStd
-            android:id="@+id/video_player"
+    <!-- 包裹一层，是因为jzvd父控件高度应该固定 -->
+    <FrameLayout
             android:layout_marginTop="10dp"
             android:layout_width="match_parent"
-            android:layout_height="200dp" />
+            android:layout_height="200dp">
+
+        <cn.jzvd.JzvdStd
+                android:id="@+id/video_player"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+    </FrameLayout>
 </LinearLayout>
