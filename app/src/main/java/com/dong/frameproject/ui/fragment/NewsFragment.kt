@@ -36,7 +36,8 @@ class NewsFragment : ListFragment<NewsBean>() {
                 holder?.setText(R.id.source,t?.source)
                 holder?.getView<ImageView>(R.id.image)?.loadUrl(t?.headpic)
                 holder?.itemView?.setOnClickListener {
-                    if(t != null) WebViewActivity.start(mContext,t.source_url,"推荐")
+//                    if(t != null) WebViewActivity.start(mContext,t.source_url,"推荐")
+                    WebViewActivity.start(mContext,"file:///android_asset/index.html","推荐")
                 }
             }
         }
